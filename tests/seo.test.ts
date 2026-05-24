@@ -78,6 +78,15 @@ describe('open graph + twitter meta', () => {
   });
 });
 
+describe('cloudflare _redirects', () => {
+  it('is shipped at dist/_redirects with all three legacy 301s', () => {
+    const redirects = readFileSync(join(distDir, '_redirects'), 'utf-8');
+    expect(redirects).toMatch(/^\/essays\s+\/writing\s+301/m);
+    expect(redirects).toMatch(/^\/soccer\s+\/football\s+301/m);
+    expect(redirects).toMatch(/^\/bookshelf\s+\/about\s+301/m);
+  });
+});
+
 describe('tracking pixel', () => {
   it('is present in every page (loaded from /_hit.gif)', () => {
     for (const file of [
