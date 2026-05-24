@@ -39,7 +39,8 @@
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.4",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.7",
+    "wrangler": "^4.94.0"
   },
   "lint-staged": {
     "*.{js,ts,astro,md,mdx,json,yml,yaml,css}": [
