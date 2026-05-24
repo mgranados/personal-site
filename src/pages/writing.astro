@@ -26,18 +26,3 @@ const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
     }
   </ul>
 </Layout>
-
-<style>
-  .writing-index {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .writing-index li {
-    margin-bottom: 0.5rem;
-  }
-  .writing-index-date {
-    color: var(--muted);
-    font-size: 0.8125rem;
-  }
-</style>
