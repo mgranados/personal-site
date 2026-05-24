@@ -20,7 +20,7 @@ pnpm verify         # typecheck + lint + test + build (gate before commit)
 
 ## Hard rules
 
-1. **Ideator entries default to private.** A project from `mgranados/ideator` only appears on this site if its frontmatter has `public: true`. The sync script filters; the build never bypasses.
+1. **Ideator publishing is two-gated and never automatic.** A project from `mgranados/ideator` may only appear on this site when BOTH conditions hold: (a) its frontmatter has `public: true`, AND (b) mgg has explicitly approved the listing in this repo (via the hand-curated content collection / allowlist). The published text is human-curated per project — the site does NOT render raw ideator markdown or frontmatter verbatim. The M5 sync script is a draft-prep tool; it never writes directly to anything the build renders. (See `~/.claude/projects/-Users-mgg-Developer-mgranados-co/memory/feedback_ideator_publishing_requires_human_approval.md`.)
 2. **Build never fails on ideator fetch errors.** If `sync-projects` can't reach GitHub, fall back to the on-disk cache and log a warning. Builds must always succeed.
 3. **Blog drafts are excluded from production builds.** A post with frontmatter `draft: true` must not appear in `dist/`. There is a test that asserts this — keep it.
 4. **No client-side JS unless it earns its place.** Astro defaults to zero JS; opt in per-component (`client:load`, `client:visible`, etc.) only when the interaction genuinely needs it.
