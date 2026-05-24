@@ -252,8 +252,8 @@ video {
 .post-date {
   color: var(--muted);
   font-size: 0.8125rem;
-  margin-top: calc(-1 * var(--space-1));
-  margin-bottom: var(--space-3);
+  margin-top: 0.25rem;
+  margin-bottom: var(--space-2);
 }
 
 .portrait {

@@ -53,21 +53,21 @@ curl -sI https://personal-site.pages.dev/robots.txt                    # 200
 All green? Move on. Any failure? Don't continue — check the build log
 (`pnpm wrangler pages deployment tail` for live logs).
 
-## 5. Add canonical custom domains
+## 5. Add canonical custom domains (dashboard — wrangler 4.x dropped this CLI command)
 
-```sh
-pnpm wrangler pages domain add personal-site martingranados.com
-pnpm wrangler pages domain add personal-site www.martingranados.com
-```
+Wrangler 4.x removed `pages domain add`. Custom-domain assignment is dashboard-only now.
 
-Because the zone is on CF, wrangler can usually auto-create the DNS record. If it asks
-to confirm, say yes. If it prints "manually add a CNAME":
+Dashboard → Workers & Pages → `personal-site` → **Custom domains** tab → **Set up a custom domain**:
 
-- Dashboard → `martingranados.com` zone → DNS → add CNAME records:
-  - `@` (apex) → `personal-site.pages.dev`, proxied (orange cloud)
-  - `www` → `personal-site.pages.dev`, proxied (orange cloud)
+1. Enter `martingranados.com` → Continue. Because the zone is in the same CF account, CF
+   auto-detects and offers "Activate domain" (one click). If it instead asks you to add
+   a DNS record manually:
+   - In the same dashboard → `martingranados.com` zone → DNS → add CNAME
+     `@` (apex) → `personal-site-abf.pages.dev`, proxied (orange cloud)
+2. Repeat for `www.martingranados.com` (CNAME `www` → `personal-site-abf.pages.dev`,
+   proxied).
 
-CF auto-issues HTTPS via their own CA within ~2 minutes.
+CF auto-issues HTTPS via their own CA within ~2 minutes of activation.
 
 Verify:
 
