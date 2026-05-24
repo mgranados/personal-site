@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Layout title="Writing — Martín Granados García" description="Essays by Martín Granados García.">
+  <h1>Writing</h1>
+  <ul class="writing-index">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/${post.id}`}>{post.data.title}</a>
+          <span class="writing-index-date">
+            {' · '}
+            {post.data.date.toLocaleDateString('en-GB', {
+              year: 'numeric',
+              month: 'short',
+            })}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
+
+<style>
+  .writing-index {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .writing-index li {
+    margin-bottom: 0.5rem;
+  }
+  .writing-index-date {
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+</style>

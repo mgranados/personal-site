@@ -16,15 +16,17 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "sync-projects": "echo 'sync-projects placeholder — implemented in M5' && exit 0",
-    "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm build",
+    "verify": "pnpm typecheck && pnpm lint && pnpm build && pnpm test",
     "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",
+    "@astrojs/rss": "^4.0.18",
     "astro": "^6.3.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@types/node": "^25.9.1",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.7.0",

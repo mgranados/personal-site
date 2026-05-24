@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('writing', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true,
+  );
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateLabel = post.data.date.toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+
+<Layout title={`${post.data.title} — Martín Granados García`} description={post.data.summary}>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="post-date">{dateLabel}</p>
+    <Content />
+  </article>
+</Layout>
+
+<style>
+  .post-date {
+    color: var(--muted);
+    font-size: 0.8125rem;
+    margin-top: calc(-1 * var(--space-1));
+    margin-bottom: var(--space-3);
+  }
+</style>
