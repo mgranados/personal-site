@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Martín Granados García',
+  description = 'Personal site of Martín Granados García — notes, essays, projects.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site site-header">
+      <h1><a href="/">Martín Granados García</a></h1>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/blog">writing</a>
+        <a href="/projects">projects</a>
+        <a href="/about">about</a>
+      </nav>
+    </header>
+    <main class="site site-main">
+      <slot />
+    </main>
+    <footer class="site site-footer">
+      <a href="https://github.com/mgranados">github</a>
+      <a href="https://x.com/martingranadosg">x</a>
+      <a href="/rss.xml">rss</a>
+    </footer>
+  </body>
+</html>
