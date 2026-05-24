@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About — Martín Granados García" description="About Martín Granados García.">
+  <h1>About</h1>
+
+  <img
+    class="portrait"
+    src="/martin.jpg"
+    width="200"
+    height="200"
+    alt="Portrait of Martín Granados García"
+  />
+
+  <p>
+    I'm a software engineer and cofounder at <a href="https://www.getincredible.com/">Incredible</a>
+    in London. Previously at <a href="https://etsy.com">Etsy</a>, <a href="https://oyster.com"
+      >Oyster</a
+    >, and <a href="https://wizeline.com">Wizeline</a>, used to live and love Mexico city. I studied
+    Computer Science at Tecnológico de Monterrey (Puebla).
+  </p>
+
+  <p>Outside of work I play football and videogames. I love coffee (perhaps too much).</p>
+
+  <p>
+    Find me on <a href="https://github.com/mgranados">github</a> as <code>mgranados</code>, or on
+    <a href="https://x.com/martingranadosg">x (twitter)</a> as <code>@martingranadosg</code>.
+  </p>
+</Layout>
+
+<style>
+  .portrait {
+    display: block;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: var(--space-3) auto;
+  }
+</style>
