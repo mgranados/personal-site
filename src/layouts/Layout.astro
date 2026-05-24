@@ -4,12 +4,24 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  /** Absolute or root-relative URL for the social preview image. */
+  ogImage?: string;
+  /** open-graph type. 'website' (default) for landing/about, 'article' for posts. */
+  ogType?: 'website' | 'article';
+  /** ISO date string for article publication (post pages only). */
+  publishedTime?: string;
 }
 
 const {
   title = 'Martín Granados García',
   description = 'Personal site of Martín Granados García — notes, essays, projects.',
+  ogImage = '/martin.jpg',
+  ogType = 'website',
+  publishedTime,
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const absoluteOgImage = new URL(ogImage, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -19,9 +31,30 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Writing" href="/rss.xml" />
     <title>{title}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:site_name" content="Martín Granados García" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@martingranadosg" />
+    <meta name="twitter:creator" content="@martingranadosg" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+
+    <slot name="head" />
   </head>
   <body>
     <header class="site site-header">
@@ -39,5 +72,17 @@ const {
       <a href="https://x.com/martingranadosg">x (twitter)</a>
       <a href="/rss.xml">rss</a>
     </footer>
+    {/* Tracking pixel — Pages Function logs the request server-side. Hidden from layout. */}
+    <img src="/_hit.gif" width="1" height="1" alt="" class="tracking-pixel" loading="lazy" />
   </body>
 </html>
+
+<style>
+  .tracking-pixel {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    border: 0;
+  }
+</style>

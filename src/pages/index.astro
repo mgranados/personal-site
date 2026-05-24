@@ -1,8 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Martín Granados García',
+  url: 'https://martingranados.com',
+  jobTitle: 'Software Engineer',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Incredible',
+    url: 'https://www.getincredible.com/',
+  },
+  sameAs: ['https://github.com/mgranados', 'https://x.com/martingranadosg'],
+};
 ---
 
 <Layout>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(personJsonLd)}
+    slot="head"
+  />
   {/* TODO M8: mgg to replace bio copy with the real one-paragraph version */}
   <p>
     Engineer in London. Previously Etsy, Oyster, Wizeline. I write essays when something needs more

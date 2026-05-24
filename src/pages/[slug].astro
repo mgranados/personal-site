@@ -20,9 +20,38 @@ const dateLabel = post.data.date.toLocaleDateString('en-GB', {
   year: 'numeric',
   month: 'long',
 });
+
+const isoDate = post.data.date.toISOString();
+const canonicalURL = new URL(`/${post.id}/`, Astro.site).toString();
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.summary,
+  datePublished: isoDate,
+  url: canonicalURL,
+  author: {
+    '@type': 'Person',
+    name: 'Martín Granados García',
+    url: 'https://martingranados.com',
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalURL },
+};
 ---
 
-<Layout title={`${post.data.title} — Martín Granados García`} description={post.data.summary}>
+<Layout
+  title={`${post.data.title} — Martín Granados García`}
+  description={post.data.summary}
+  ogType="article"
+  publishedTime={isoDate}
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(articleJsonLd)}
+    slot="head"
+  />
   <article>
     <h1>{post.data.title}</h1>
     <p class="post-date">{dateLabel}</p>

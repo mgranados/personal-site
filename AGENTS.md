@@ -37,15 +37,18 @@ pnpm verify         # typecheck + lint + test + build (gate before commit)
 
 ```
 src/
-  pages/          # Astro routes
-  layouts/        # shared layouts (added M1)
-  styles/         # global.css with Tailwind import
-  content/        # content collections (added M3)
-    blog/         # MDX blog posts
-    external-projects/  # synced from ideator (added M5)
-scripts/          # sync-projects.ts (added M5)
-tests/            # vitest specs
-public/           # static assets (favicon, photos, _redirects)
+  pages/          # Astro routes (index, writing, [slug], about, rss.xml.ts)
+  layouts/        # Layout.astro
+  styles/         # global.css (hand-rolled, no framework)
+  content/        # content collections
+    writing/      # MD/MDX essays (added M3)
+    projects/     # hand-curated projects (deferred past v1; see hard rule #1)
+  content.config.ts  # collection schemas
+scripts/          # sync-projects.ts (deferred past v1 with M5)
+tests/            # vitest specs (draft exclusion, SEO assets, smoke)
+public/           # static assets (favicon, martin.jpg, fonts/, robots.txt)
+functions/        # Cloudflare Pages Functions (added M6)
+  _hit.gif.ts     # analytics pixel — logs pageviews to CF dashboard
 ```
 
 ## Legacy site
