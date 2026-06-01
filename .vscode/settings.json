@@ -1,0 +1,13 @@
+{
+  // Prose-writing setup for Markdown. Visual only — no hard line breaks are
+  // inserted, so paragraphs still reflow when Astro renders them.
+  // The site's rendered column is ~75 chars (550px prose width / Public Sans ~14.5px);
+  // ruler sits at 80 as a slightly roomier cap.
+  "[markdown]": {
+    "editor.rulers": [80],
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "editor.quickSuggestions": false,
+    "editor.trimAutoWhitespace": false
+  }
+}

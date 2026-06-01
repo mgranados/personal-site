@@ -39,7 +39,7 @@
 
   --size-body: 0.90625rem;
   --leading-body: 1.5;
-  --width-prose: 550px;
+  --width-prose: 65ch; /* ~80 rendered chars/line (ch = wide "0" glyph, so 65ch ≈ 80 letters) */
   --weight-body: 300;
 
   --space-1: 0.5rem;
