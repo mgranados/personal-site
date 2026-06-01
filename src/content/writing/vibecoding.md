@@ -6,7 +6,7 @@ tags: [vibecoding, personal, sideproject]
 draft: false
 ---
 
-I've been fortunate enough to work at a startup in recent years, so it was fairly easy to start tinkering with claude code some days after it launched. I never got into cursor. I still liked Jetbrains Pycharm too much with their autocomplete and LSP, which I thought were good enough for the work I was doing at the time.
+I've been fortunate enough to work at a startup in recent years, so it was fairly easy to start tinkering with claude code some days after it [launched in February 2025](https://www.anthropic.com/news/claude-3-7-sonnet). I never got into cursor. I still liked Jetbrains Pycharm too much with their autocomplete and LSP, which I thought were good enough for the work I was doing at the time.
 
 I also always have loved the concept of sideprojects. I've done more than a dozen over my programming years, but there's usually little time or, being honest, willingness to learn and code over the nights or weekends. And I think AI has been a really cool unblocker here.
 
