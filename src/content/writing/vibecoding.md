@@ -1,5 +1,5 @@
 ---
-title: On two weeks of vibecoding personal projects
+title: Unblocked
 date: 2026-06-01
 summary: How Claude Code unstuck a stale Swift side project, porting Next Train to the web in about an hour, and what two weeks of vibecoding taught me about AI as a creativity unblocker.
 tags: [vibecoding, personal, sideproject]
