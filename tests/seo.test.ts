@@ -78,12 +78,12 @@ describe('open graph + twitter meta', () => {
   });
 });
 
+// Redirects moved from public/_redirects into functions/_middleware.ts (a root
+// Pages middleware disables _redirects). The 301 behavior is unit-tested in
+// tests/middleware.test.ts; here we just assert the dead file is gone.
 describe('cloudflare _redirects', () => {
-  it('is shipped at dist/_redirects with all three legacy 301s', () => {
-    const redirects = readFileSync(join(distDir, '_redirects'), 'utf-8');
-    expect(redirects).toMatch(/^\/essays\s+\/writing\s+301/m);
-    expect(redirects).toMatch(/^\/soccer\s+\/football\s+301/m);
-    expect(redirects).toMatch(/^\/bookshelf\s+\/about\s+301/m);
+  it('is no longer shipped (redirects live in the middleware now)', () => {
+    expect(existsSync(join(distDir, '_redirects'))).toBe(false);
   });
 });
 
