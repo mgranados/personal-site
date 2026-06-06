@@ -2,8 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import { getSortedProjects } from '../lib/projects';
 import { safeJsonLd } from '../lib/jsonld';
+import { imageSize } from '../lib/imageSize';
 
 const projects = await getSortedProjects();
+
+// Intrinsic preview dimensions, read at build, indexed parallel to `projects`.
+// Lets each <img> carry explicit width/height (Lighthouse audit) without a dep.
+const projectDimensions = await Promise.all(
+  projects.map((p) => (p.data.image ? imageSize(p.data.image) : Promise.resolve(undefined))),
+);
+
+// Social card for this page: the featured (first) project's preview rather than
+// the site-wide author photo, so sharing /projects shows an actual project.
+const ogImage = projects.find((p) => p.data.image)?.data.image;
 
 const title = 'Projects — Martín Granados García';
 const description = 'Side projects and small utilities built by Martín Granados García.';
@@ -61,7 +72,7 @@ const projectsJsonLd = {
 const jsonLdScript = safeJsonLd(projectsJsonLd);
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} ogImage={ogImage}>
   <script is:inline type="application/ld+json" set:html={jsonLdScript} slot="head" />
   <link
     rel="alternate"
@@ -81,8 +92,12 @@ const jsonLdScript = safeJsonLd(projectsJsonLd);
   <p>Side projects and small utilities.</p>
   <ul class="project-index">
     {
-      projects.map((p) => {
+      projects.map((p, i) => {
         const href = p.data.url ?? p.data.repo;
+        const dims = projectDimensions[i];
+        // First card is above the fold (likely the LCP): load it eagerly with
+        // high priority. Lazy-load the rest.
+        const eager = i === 0;
         return (
           <li class="project">
             <article>
@@ -91,7 +106,9 @@ const jsonLdScript = safeJsonLd(projectsJsonLd);
                   <img
                     src={p.data.image}
                     alt={p.data.imageAlt ?? `${p.data.name} — preview`}
-                    loading="lazy"
+                    {...(dims ?? {})}
+                    loading={eager ? 'eager' : 'lazy'}
+                    fetchpriority={eager ? 'high' : undefined}
                     decoding="async"
                   />
                 </a>
