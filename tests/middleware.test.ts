@@ -70,8 +70,8 @@ describe('normal requests pass through', () => {
   });
 });
 
-describe('/projects.md content type', () => {
-  it('forces text/markdown, preserving status + body', async () => {
+describe('feed content types', () => {
+  it('forces text/markdown (with charset) on /projects.md, preserving status + body', async () => {
     const asset = new Response('# Projects', {
       status: 200,
       headers: { 'Content-Type': 'text/plain' },
@@ -82,12 +82,23 @@ describe('/projects.md content type', () => {
     expect(await res.text()).toBe('# Projects');
   });
 
-  it('leaves other assets (e.g. /projects.json) untouched', async () => {
-    const asset = new Response('{}', {
+  it('adds charset=utf-8 to /projects.json so UTF-8 (accents) renders correctly', async () => {
+    const asset = new Response('{"name":"Martín"}', {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
     const res = await onRequest(ctx('https://martingranados.com/projects.json', asset));
-    expect(res.headers.get('content-type')).toBe('application/json');
+    expect(res.headers.get('content-type')).toBe('application/json; charset=utf-8');
+    expect(await res.text()).toBe('{"name":"Martín"}');
+  });
+
+  it('leaves unrelated assets untouched', async () => {
+    const asset = new Response('<html></html>', {
+      status: 200,
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'x-sentinel': '1' },
+    });
+    const res = await onRequest(ctx('https://martingranados.com/about/', asset));
+    expect(res.headers.get('content-type')).toBe('text/html; charset=utf-8');
+    expect(res.headers.get('x-sentinel')).toBe('1');
   });
 });

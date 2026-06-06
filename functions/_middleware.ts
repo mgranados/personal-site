@@ -23,6 +23,16 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   '/bookshelf': '/about/',
 };
 
+// Force the right Content-Type (with charset) on the machine-readable feeds.
+// Pages' static asset server types these by extension and drops the charset our
+// endpoints set — which mangles UTF-8 (e.g. "Martín" → "MartÃ­n") and serves
+// `.md` as text/plain. This can't live in `_headers`: a root middleware bypasses
+// it, exactly like `_redirects`.
+const CONTENT_TYPES: Record<string, string> = {
+  '/projects.md': 'text/markdown; charset=utf-8',
+  '/projects.json': 'application/json; charset=utf-8',
+};
+
 export const onRequest: PagesFunction = async (context) => {
   const { request, next } = context;
   const url = new URL(request.url);
@@ -48,13 +58,11 @@ export const onRequest: PagesFunction = async (context) => {
   // 4. Serve the asset.
   const response = await next();
 
-  // 5. Force the right Content-Type on the Markdown projects feed. Pages' static
-  //    asset server tends to send `.md` as text/plain (or as a download), but
-  //    agents and browsers want text/markdown. This can't live in `_headers`:
-  //    a root middleware bypasses it, exactly like `_redirects` above.
-  if (url.pathname === '/projects.md') {
+  // 5. Override the Content-Type for the feeds that need it (see CONTENT_TYPES).
+  const contentType = CONTENT_TYPES[url.pathname];
+  if (contentType) {
     const headers = new Headers(response.headers);
-    headers.set('Content-Type', 'text/markdown; charset=utf-8');
+    headers.set('Content-Type', contentType);
     return new Response(response.body, {
       status: response.status,
       statusText: response.statusText,
