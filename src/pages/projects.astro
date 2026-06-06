@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSortedProjects } from '../lib/projects';
+import { safeJsonLd } from '../lib/jsonld';
+
+const projects = await getSortedProjects();
+
+const title = 'Projects — Martín Granados García';
+const description = 'Side projects and small utilities built by Martín Granados García.';
+const canonicalURL = new URL('/projects/', Astro.site).toString();
+
+const absolute = (path?: string) => (path ? new URL(path, Astro.site).toString() : undefined);
+
+// Structured data so search engines and AI agents can index the list directly.
+const projectsJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Projects',
+  description,
+  url: canonicalURL,
+  inLanguage: 'en',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Martín Granados García',
+    url: 'https://martingranados.com',
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: projects.length,
+    itemListElement: projects.map((p, i) => {
+      const img = absolute(p.data.image);
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'SoftwareApplication',
+          name: p.data.name,
+          description: p.data.description,
+          ...(p.data.url && { url: p.data.url }),
+          ...(p.data.repo && { codeRepository: p.data.repo }),
+          ...(img && { image: img, screenshot: img }),
+          ...(p.data.category && { applicationCategory: p.data.category }),
+          ...(p.data.features.length > 0 && { featureList: p.data.features }),
+          ...(p.data.tags.length > 0 && { keywords: p.data.tags.join(', ') }),
+          dateCreated: String(p.data.year),
+          ...(p.data.free && {
+            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+          }),
+          author: {
+            '@type': 'Person',
+            name: 'Martín Granados García',
+            url: 'https://martingranados.com',
+          },
+        },
+      };
+    }),
+  },
+};
+
+const jsonLdScript = safeJsonLd(projectsJsonLd);
+---
+
+<Layout title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={jsonLdScript} slot="head" />
+  <link
+    rel="alternate"
+    type="application/json"
+    href="/projects.json"
+    title="Projects as JSON"
+    slot="head"
+  />
+  <link
+    rel="alternate"
+    type="text/markdown"
+    href="/projects.md"
+    title="Projects as Markdown"
+    slot="head"
+  />
+  <h1>Projects</h1>
+  <p>Side projects and small utilities.</p>
+  <ul class="project-index">
+    {
+      projects.map((p) => {
+        const href = p.data.url ?? p.data.repo;
+        return (
+          <li class="project">
+            <article>
+              {p.data.image && (
+                <a class="project-preview" href={href} aria-hidden="true" tabindex="-1">
+                  <img
+                    src={p.data.image}
+                    alt={p.data.imageAlt ?? `${p.data.name} — preview`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              )}
+              <h2 class="project-name">{href ? <a href={href}>{p.data.name}</a> : p.data.name}</h2>
+              <p class="project-desc">{p.data.description}</p>
+              <p class="project-meta">
+                <time datetime={String(p.data.year)}>{p.data.year}</time>
+                {p.data.repo && (
+                  <>
+                    {' · '}
+                    <a href={p.data.repo}>source</a>
+                  </>
+                )}
+              </p>
+            </article>
+          </li>
+        );
+      })
+    }
+  </ul>
+  <p class="project-feeds">
+    <a href="/projects.json">JSON</a> · <a href="/projects.md">Markdown</a>
+  </p>
+</Layout>

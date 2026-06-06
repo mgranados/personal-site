@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { safeJsonLd } from '../lib/jsonld';
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -17,12 +18,7 @@ const personJsonLd = {
 ---
 
 <Layout>
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(personJsonLd)}
-    slot="head"
-  />
+  <script is:inline type="application/ld+json" set:html={safeJsonLd(personJsonLd)} slot="head" />
   <p>
     I'm a software engineer and cofounder at <a href="https://www.getincredible.com/">Incredible</a>
     in London. Previously at <a href="https://etsy.com">Etsy</a>, <a href="https://oyster.io"

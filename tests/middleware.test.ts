@@ -69,3 +69,25 @@ describe('normal requests pass through', () => {
     expect(res.headers.get('x-sentinel')).toBe('1');
   });
 });
+
+describe('/projects.md content type', () => {
+  it('forces text/markdown, preserving status + body', async () => {
+    const asset = new Response('# Projects', {
+      status: 200,
+      headers: { 'Content-Type': 'text/plain' },
+    });
+    const res = await onRequest(ctx('https://martingranados.com/projects.md', asset));
+    expect(res.status).toBe(200);
+    expect(res.headers.get('content-type')).toBe('text/markdown; charset=utf-8');
+    expect(await res.text()).toBe('# Projects');
+  });
+
+  it('leaves other assets (e.g. /projects.json) untouched', async () => {
+    const asset = new Response('{}', {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+    const res = await onRequest(ctx('https://martingranados.com/projects.json', asset));
+    expect(res.headers.get('content-type')).toBe('application/json');
+  });
+});

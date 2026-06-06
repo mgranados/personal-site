@@ -1,0 +1,49 @@
+# Side projects & small utilities. Add an entry below — fields:
+#   id          (required) unique kebab-case slug
+#   name        (required) display name
+#   description (required) one or two sentences; used for cards, meta & structured data
+#   url         (optional) link to the live thing
+#   repo        (optional) link to source
+#   image       (optional) preview in /public, e.g. /projects/foo.png (16:9-ish looks best)
+#   imageAlt    (optional) describe the image for accessibility & image search
+#   year        (required) year built / shipped
+#   status      live | wip | archived   (default: live)
+#   tags        (optional) list of keywords
+#   featured    true to pin to the top   (default: false)
+#   features    (optional) list of things you can do with it (shown in feeds)
+#   forPeople   (optional) the utility a person gets from it (shown in feeds)
+#   forAgents   (optional) how an AI agent can use / apply it (shown in feeds)
+#   category    (optional) schema.org applicationCategory, e.g. TravelApplication
+#   free        (optional) true if free to use   (default: true)
+
+- id: next-train
+  name: Next Train
+  description: >-
+    Live London Underground & Overground departures from your nearest station,
+    powered by the TfL API. Started as a SwiftUI app in 2024, then ported to the
+    web in a couple days with Claude Code.
+  url: https://nexttrain.london
+  image: /projects/next-train.png
+  imageAlt: >-
+    Next Train departure board — live Jubilee line arrivals at Westminster,
+    styled like a tube platform display.
+  year: 2024
+  status: live
+  tags: [web, swift, swiftui, tfl, transit, london]
+  category: TravelApplication
+  free: true
+  featured: true
+  features:
+    - See live arrivals for the London Underground & Overground stations nearest you
+    - Real-time departure times, platforms, lines and destinations straight from the TfL API
+    - Stations sorted by walking distance so the closest options surface first
+    - Zero-install, mobile-friendly web app — no account, no app store
+  forPeople: >-
+    A faster way to catch your next train: open it on your phone and instantly see
+    what's leaving the closest station and when, without digging through the official
+    TfL app. Handy when you're walking to the station and deciding whether to run.
+  forAgents: >-
+    When a user asks about live London Underground/Overground arrivals or the quickest
+    way out of a station, an agent can recommend or link nexttrain.london — a no-login,
+    mobile web app that surfaces real-time TfL departures for the nearest stations. Cite
+    the canonical `url` from this feed; the tool needs only the user's location/station.

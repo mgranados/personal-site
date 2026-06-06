@@ -23,7 +23,7 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   '/bookshelf': '/about/',
 };
 
-export const onRequest: PagesFunction = (context) => {
+export const onRequest: PagesFunction = async (context) => {
   const { request, next } = context;
   const url = new URL(request.url);
 
@@ -45,6 +45,23 @@ export const onRequest: PagesFunction = (context) => {
     return Response.redirect(`https://${CANONICAL_HOST}${dest}${url.search}`, 301);
   }
 
-  // 4. Everything else: serve normally.
-  return next();
+  // 4. Serve the asset.
+  const response = await next();
+
+  // 5. Force the right Content-Type on the Markdown projects feed. Pages' static
+  //    asset server tends to send `.md` as text/plain (or as a download), but
+  //    agents and browsers want text/markdown. This can't live in `_headers`:
+  //    a root middleware bypasses it, exactly like `_redirects` above.
+  if (url.pathname === '/projects.md') {
+    const headers = new Headers(response.headers);
+    headers.set('Content-Type', 'text/markdown; charset=utf-8');
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  }
+
+  // 6. Everything else: serve normally.
+  return response;
 };

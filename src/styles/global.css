@@ -271,3 +271,78 @@ video {
   height: 1px;
   border: 0;
 }
+
+.project-index {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.project-index > li {
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.project-index > li:first-child {
+  border-top: 0;
+  padding-top: var(--space-2);
+}
+
+.project-preview {
+  display: block;
+  margin-bottom: var(--space-2);
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.project-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-preview:hover img {
+  transform: scale(1.015);
+}
+
+.project-name {
+  font-size: 1rem;
+  margin-block: 0 0.25rem;
+}
+
+.project-desc {
+  margin-block: 0 0.4rem;
+}
+
+.project-meta {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.project-meta a {
+  color: var(--muted);
+}
+
+.project-meta a:hover {
+  color: var(--accent);
+}
+
+.project-feeds {
+  margin-top: var(--space-4);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.project-feeds a {
+  color: var(--muted);
+}
+
+.project-feeds a:hover {
+  color: var(--accent);
+}

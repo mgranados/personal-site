@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
+import { safeJsonLd } from '../lib/jsonld';
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('writing', ({ data }) =>
@@ -46,12 +47,7 @@ const articleJsonLd = {
   ogType="article"
   publishedTime={isoDate}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(articleJsonLd)}
-    slot="head"
-  />
+  <script is:inline type="application/ld+json" set:html={safeJsonLd(articleJsonLd)} slot="head" />
   <article>
     <h1>{post.data.title}</h1>
     <p class="post-date">{dateLabel}</p>
