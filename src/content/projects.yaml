@@ -99,9 +99,9 @@
   repo: https://github.com/mgranados/screenshotter
   image: /projects/screenshotter.png
   imageAlt: >-
-    A macOS terminal running `screenshotter toolbar`: it logs the watched
-    screenshot folder and a live optimization — a 1006 KB capture compressed to
-    444 KB (55.9% saved) in 185 ms and copied to the clipboard.
+    Screenshotter's macOS menu-bar dropdown — a toggle to turn it off and three
+    compression presets (Low ~30%, Mid ~45%, High ~80%), a recent-savings section,
+    and Quit Screenshotter.
   year: 2026
   status: live
   tags:
