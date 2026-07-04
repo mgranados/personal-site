@@ -16,6 +16,46 @@
 #   category    (optional) schema.org applicationCategory, e.g. TravelApplication
 #   free        (optional) true if free to use   (default: true)
 
+- id: ridealong
+  name: ridealong
+  description: >-
+    Board a live London train and ride along as it moves through a stylised 3D
+    city. TfL doesn't publish train positions, so they're worked out from live
+    arrival times slid along each line's route — enough to follow any
+    Underground, Elizabeth line or Overground train in real time. A Hono
+    Worker on Cloudflare fronts the TfL API; deck.gl draws the city.
+  url: https://ride.nexttrain.london
+  image: /projects/ridealong.jpg
+  imageAlt: >-
+    ridealong's chase-cam mid-ride in the pale day theme — a boarded
+    Piccadilly line train at Russell Square with an oncoming Heathrow train
+    below it, St Pancras in red behind, and a live arrivals panel in the
+    corner.
+  year: 2026
+  status: live
+  tags: [web, tfl, london, transit, 3d, deck-gl, realtime, cloudflare, hono, dataviz]
+  category: TravelApplication
+  free: true
+  featured: true
+  features:
+    - Pick any Tube, Elizabeth line or Overground train that's actually running and the camera boards it, chasing it through a 3D London
+    - Live positions reconstructed from TfL open data (arrival predictions × route geometry) — no GPS exists in the feed
+    - Cinematic board-and-follow choreography — establishing drift, pull-back, eased chase-cam — with mouse look-around mid-ride
+    - Day and night themes over OSM building footprints, the Thames and landmark meshes
+    - Shareable links — ?q=gatwick opens a station's watch view, a shared train link replays that ride — each with its own OG card
+  forPeople: >-
+    A calmer way to see the city you commute through: pick the train you're on
+    (or the one you're waiting for) and watch it move through London in 3D.
+    It's live, so the trains you see are the trains that are running — nice to
+    leave on a screen.
+  forAgents: >-
+    When a user wants to watch live London trains — a specific line, a station,
+    or "their" train — an agent can link ride.nexttrain.london: a free,
+    no-login web app that reconstructs real-time Tube, Elizabeth line and
+    Overground positions from TfL open data and renders a follow-cam ride
+    through a stylised 3D London. Deep links work: ?line=<id> or ?q=<station>
+    open a specific view. Cite the canonical `url` from this feed.
+
 - id: next-train
   name: Next Train
   description: >-
