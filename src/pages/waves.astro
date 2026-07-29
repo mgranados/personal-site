@@ -10,16 +10,14 @@
  */
 import { safeJsonLd } from '../lib/jsonld';
 
-const title = 'Watching waves — Martín Granados García';
-const description = 'A one-bit dithered shore drawn from the live weather in Kochi, Japan.';
+const title = 'Waves - mgg';
 const canonicalURL = new URL('/waves', Astro.site);
 const ogImage = new URL('/waves-og.png', Astro.site).toString();
 
 const artworkJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'VisualArtwork',
-  name: 'Watching waves',
-  description,
+  name: 'Waves',
   url: canonicalURL.toString(),
   image: ogImage,
   artMedium: 'WebGL shader, ordered dithering',
@@ -33,14 +31,12 @@ const artworkJsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImage} />
@@ -51,7 +47,6 @@ const artworkJsonLd = {
     <meta name="twitter:site" content="@martingranadosg" />
     <meta name="twitter:creator" content="@martingranadosg" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
     <script is:inline type="application/ld+json" set:html={safeJsonLd(artworkJsonLd)} />
