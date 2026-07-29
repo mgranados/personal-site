@@ -319,12 +319,11 @@ void main(){
         document.getElementById('wx').textContent =
           `kochi ${hh}:${mm} · ${Math.round(WX.temp)}°C · ${WMO[WX.code] || 'cloudy'} · wind ${Math.round(WX.wind)} km/h`;
       }
-      /* fetch at most every 15 min, surviving reloads via localStorage */
+      /* fetch at most every 15 min, surviving reloads via localStorage;
+         /api/weather is an edge-cached proxy (functions/api/weather.ts), so
+         open-meteo sees one call per edge location per window, not per visitor */
       function fetchWx() {
-        fetch(
-          'https://api.open-meteo.com/v1/forecast?latitude=33.5589&longitude=133.5314' +
-            '&current=temperature_2m,cloud_cover,precipitation,weather_code,wind_speed_10m,is_day&timezone=Asia%2FTokyo',
-        )
+        fetch('/api/weather')
           .then((r) => r.json())
           .then((j) => {
             const c = j.current;
