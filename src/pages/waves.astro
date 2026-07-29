@@ -140,7 +140,6 @@ float fbm(vec2 p){
 float Bayer2(vec2 a){ a = floor(a); return fract(a.x/2.0 + a.y*a.y*0.75); }
 float Bayer4(vec2 a){ return Bayer2(0.5*a)*0.25 + Bayer2(a); }
 float Bayer8(vec2 a){ return Bayer4(0.5*a)*0.25 + Bayer2(a); }
-float luma(vec3 c){ return dot(c, vec3(0.299, 0.587, 0.114)); }
 vec3 grayL(float L, float k, float b){ return vec3(k*L + b); }
 
 /* everything that gives the print its look, by name */
@@ -247,7 +246,7 @@ void main(){
 
   vec3 c = scene(uv, ar, t * uWind, k);          /* wind sets the sea's pace */
   c = (c - 0.5) * 1.45 + 0.5;                    /* ink-press contrast */
-  float on = luma(c) + (Bayer8(cell) - 0.5)*0.65;
+  float on = dot(c, vec3(0.299, 0.587, 0.114)) + (Bayer8(cell) - 0.5)*0.65;
   vec3 ink = vec3(0.10, 0.10, 0.09), paper = vec3(0.93, 0.90, 0.82);
   fragColor = vec4(on > 0.5 ? paper : ink, 1.0);
 }`;
@@ -391,9 +390,10 @@ void main(){
         gl.uniform2f(U.uRes, w, h);
       }
 
+      /* random start time: a different stretch of sky and swell every visit */
       let raf = null,
         t0 = performance.now(),
-        tAcc = 0;
+        tAcc = Math.random() * 600;
       function frame(now) {
         raf = requestAnimationFrame(frame);
         const dt = Math.min(0.05, (now - t0) / 1000);
