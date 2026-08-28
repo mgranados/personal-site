@@ -52,6 +52,7 @@ export async function GET(context: APIContext) {
     lines.push(`- Year: ${f.year}`);
     if (f.url) lines.push(`- URL: ${f.url}`);
     if (f.repo) lines.push(`- Source: ${f.repo}`);
+    if (f.hn) lines.push(`- Hacker News: ${f.hn}`);
     if (f.tags.length) lines.push(`- Tags: ${f.tags.join(', ')}`);
     if (f.image) lines.push(`- Image: ${f.image}`);
     lines.push('', '---', '');

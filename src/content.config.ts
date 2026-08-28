@@ -34,8 +34,10 @@ const projects = defineCollection({
     description: z.string(),
     url: httpUrl.optional(),
     repo: httpUrl.optional(),
-    image: imageSrc.optional(), // root-relative preview, e.g. /projects/foo.png
+    hn: httpUrl.optional(),
+    image: imageSrc.optional(),
     imageAlt: z.string().optional(),
+    hover: z.enum(['pan', 'video']).optional(), // pan = Ken Burns; video = sibling .webm/.mp4
     year: z.number().int(),
     status: z.enum(['live', 'wip', 'archived']).default('live'),
     tags: z.array(z.string()).default([]),

@@ -22,6 +22,7 @@ export function toFeedItem(entry: CollectionEntry<'projects'>, site: string | UR
     description: d.description,
     ...(d.url && { url: d.url }),
     ...(d.repo && { repo: d.repo }),
+    ...(d.hn && { hn: d.hn }),
     ...(d.image && { image: abs(d.image), imageAlt: d.imageAlt }),
     year: d.year,
     status: d.status,

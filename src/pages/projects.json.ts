@@ -39,6 +39,7 @@ export async function GET(context: APIContext) {
       description: 'One-line summary of what it is.',
       url: 'Canonical link to the live tool (omitted if there is none).',
       repo: 'Public source code, if available.',
+      hn: 'Hacker News discussion thread, if there is one.',
       image: 'Absolute URL of a preview image.',
       year: 'Year the project was built or shipped.',
       status: 'live (in use) | wip (in progress) | archived (no longer maintained).',

@@ -98,11 +98,18 @@ const jsonLdScript = safeJsonLd(projectsJsonLd);
         // First card is above the fold (likely the LCP): load it eagerly with
         // high priority. Lazy-load the rest.
         const eager = i === 0;
+        const stem = p.data.image?.replace(/\.[^.]+$/, '');
+        const video = p.data.hover === 'video' ? stem : undefined;
         return (
           <li class="project">
             <article>
               {p.data.image && (
-                <a class="project-preview" href={href} aria-hidden="true" tabindex="-1">
+                <a
+                  class:list={['project-preview', p.data.hover === 'pan' && 'project-preview--pan']}
+                  href={href}
+                  aria-hidden="true"
+                  tabindex="-1"
+                >
                   <img
                     src={p.data.image}
                     alt={p.data.imageAlt ?? `${p.data.name} — preview`}
@@ -111,6 +118,12 @@ const jsonLdScript = safeJsonLd(projectsJsonLd);
                     fetchpriority={eager ? 'high' : undefined}
                     decoding="async"
                   />
+                  {video && (
+                    <video muted loop playsinline preload="none" aria-hidden="true">
+                      <source src={`${video}.webm`} type="video/webm" />
+                      <source src={`${video}.mp4`} type="video/mp4" />
+                    </video>
+                  )}
                 </a>
               )}
               <h2 class="project-name">{href ? <a href={href}>{p.data.name}</a> : p.data.name}</h2>
@@ -121,6 +134,12 @@ const jsonLdScript = safeJsonLd(projectsJsonLd);
                   <>
                     {' · '}
                     <a href={p.data.repo}>source</a>
+                  </>
+                )}
+                {p.data.hn && (
+                  <>
+                    {' · '}
+                    <a href={p.data.hn}>hn</a>
                   </>
                 )}
               </p>
@@ -134,3 +153,23 @@ const jsonLdScript = safeJsonLd(projectsJsonLd);
     <a href="/projects.json">JSON</a> · <a href="/projects.md">Markdown</a>
   </p>
 </Layout>
+
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) {
+    for (const el of document.querySelectorAll('.project-preview:has(video)')) {
+      const video = el.querySelector('video');
+      if (!video) continue;
+      el.addEventListener('pointerenter', () => {
+        void video
+          .play()
+          .then(() => el.classList.add('is-playing'))
+          .catch(() => {});
+      });
+      el.addEventListener('pointerleave', () => {
+        el.classList.remove('is-playing');
+        video.pause();
+        video.currentTime = 0;
+      });
+    }
+  }
+</script>
