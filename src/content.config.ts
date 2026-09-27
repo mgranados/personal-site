@@ -42,6 +42,7 @@ const projects = defineCollection({
     status: z.enum(['live', 'wip', 'archived']).default('live'),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
+    order: z.number().int().default(0),
     // Richer detail — surfaced in the JSON/Markdown feeds for agents & people.
     features: z.array(z.string()).default([]), // what you can do with it
     forPeople: z.string().optional(), // the utility a human gets

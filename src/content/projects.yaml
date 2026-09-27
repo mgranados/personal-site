@@ -12,11 +12,47 @@
 #   status      live | wip | archived   (default: live)
 #   tags        (optional) list of keywords
 #   featured    true to pin to the top   (default: false)
+#   order       lower numbers appear first within the featured group (default: 0)
 #   features    (optional) list of things you can do with it (shown in feeds)
 #   forPeople   (optional) the utility a person gets from it (shown in feeds)
 #   forAgents   (optional) how an AI agent can use / apply it (shown in feeds)
 #   category    (optional) schema.org applicationCategory, e.g. TravelApplication
 #   free        (optional) true if free to use   (default: true)
+
+- id: robin
+  name: Robin
+  description: >-
+    A little less email to deal with. Use a Robin address when you sign up for
+    things: it keeps receipts, bookings and newsletters organised, and forwards
+    login codes to your usual inbox. There’s a calendar and a link people can
+    use to book time with you, too.
+  url: https://withrobin.dev
+  image: /projects/robin.png
+  imageAlt: >-
+    Robin's landing page — “An inbox on easy mode” above a robin perched on an
+    envelope, sorting mail into Receipts and Plans.
+  hover: pan
+  year: 2026
+  status: live
+  tags: [web, email, inbox, calendar, bookings, ai, mcp]
+  category: ProductivityApplication
+  free: false
+  featured: true
+  order: -1
+  features:
+    - Use a Robin address for signups and receive login codes in your usual inbox
+    - Keep receipts, bookings, notes and newsletters in automatically organised views
+    - Browse your calendar, subscribe in your calendar app and share a booking link
+    - Connect your own AI agent through invitation-only MCP access to read mail and prepare reply previews
+  forPeople: >-
+    Keep signup mail and everyday admin in a separate inbox that sorts itself,
+    while login codes still reach you. Calendar subscriptions and booking pages
+    help keep plans in one place.
+  forAgents: >-
+    Robin offers invitation-only, inbox-scoped MCP access for reading messages
+    and attachments and saving reply previews. It requires a separate permission
+    grant and does not send replies or manage calendars through MCP. See
+    https://withrobin.dev/agents/ for access and setup details.
 
 - id: mdpreview
   name: mdpreview

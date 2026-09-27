@@ -3,10 +3,11 @@ import type { CollectionEntry } from 'astro:content';
 
 const statusOrder = { live: 0, wip: 1, archived: 2 } as const;
 
-/** Featured first, then newest year, then live → wip → archived. */
+/** Featured first, then editorial order, newest year, and live → wip → archived. */
 export async function getSortedProjects(): Promise<CollectionEntry<'projects'>[]> {
   return (await getCollection('projects')).sort((a, b) => {
     if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+    if (a.data.order !== b.data.order) return a.data.order - b.data.order;
     if (a.data.year !== b.data.year) return b.data.year - a.data.year;
     return statusOrder[a.data.status] - statusOrder[b.data.status];
   });
