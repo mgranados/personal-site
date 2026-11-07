@@ -50,6 +50,11 @@ const artworkJsonLd = {
     <meta name="twitter:image" content={ogImage} />
 
     <script is:inline type="application/ld+json" set:html={safeJsonLd(artworkJsonLd)} />
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "576bd4af16ef4ff8b8e318d41ba535fb"}'></script>
   </head>
   <body>
     <canvas id="c"></canvas>

@@ -54,6 +54,12 @@ const absoluteOgImage = new URL(ogImage, Astro.site).toString();
     <meta name="twitter:image" content={absoluteOgImage} />
 
     <slot name="head" />
+    <!-- Cloudflare Web Analytics -->
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "576bd4af16ef4ff8b8e318d41ba535fb"}'></script>
   </head>
   <body>
     <header class="site site-header">
